@@ -1,63 +1,122 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 @import 'tailwindcss';
 
 @theme {
-  --color-primary: #1B5E3B;
-  --color-primary-light: #2D7A52;
-  --color-primary-dark: #0F3D26;
-  --color-accent: #E8820C;
-  --color-accent-light: #F5A030;
-  --color-bg: #FAFAF8;
-  --color-surface: #FFFFFF;
-  --color-muted-bg: #F0EDE6;
-  --color-border: #E5E0D8;
-  --color-text: #141210;
-  --color-text-muted: #6B6560;
-  --color-text-light: #9B9590;
-  --color-green-50: #F0F9F4;
-  --color-green-100: #D6EDE3;
-  --color-amber-50: #FFF8ED;
-  --color-amber-100: #FDECD0;
+  --color-primary: #2271b1;
+  --color-primary-light: #135e96;
+  --color-primary-dark: #1d2327;
+  --color-wp-blue: #2271b1;
+  --color-wp-blue-hover: #135e96;
+  --color-wp-dark: #1d2327;
+  --color-wp-gray: #f0f0f1;
+  --color-wp-border: transparent;
+  --color-accent: #d97706;
+  --color-accent-light: #f59e0b;
+  --color-bg: #f0f0f1;
+  --color-surface: #ffffff;
+  --color-muted-bg: #e2e4e7;
+  --color-border: transparent;
+  --color-text: #1d2327;
+  --color-text-muted: #50575e;
+  --color-text-light: #8c8f94;
 
-  --font-display: 'Fraunces', serif;
-  --font-body: 'Outfit', sans-serif;
+  --font-display: 'Inter', sans-serif;
+  --font-body: 'Inter', sans-serif;
 
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
 }
 
 html {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Inter', sans-serif;
   scroll-behavior: smooth;
 }
 
 body {
-  background-color: #FAFAF8;
-  color: #141210;
-  font-family: 'Outfit', sans-serif;
+  background-color: #f0f0f1;
+  color: #1d2327;
+  font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #E5E0D8; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #6B6560; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #f0f0f1; }
+::-webkit-scrollbar-thumb { background: #c3c4c7; }
+::-webkit-scrollbar-thumb:hover { background: #8c8f94; }
 
-.font-display { font-family: 'Fraunces', serif; }
-.font-body { font-family: 'Outfit', sans-serif; }
+/* WordPress Style Utilities - No Outlines, Solid Square Boxes */
+.wp-card {
+  background-color: #ffffff;
+  border: none;
+  border-radius: 0px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.wp-card-header {
+  background-color: #f6f7f7;
+  border: none;
+  padding: 12px 16px;
+  font-weight: 700;
+  color: #1d2327;
+  border-bottom: 2px solid #2271b1;
+}
+
+.wp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 0px;
+  font-size: 13px;
+  font-weight: 700;
+  border: none;
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.wp-btn-primary {
+  background-color: #2271b1;
+  color: #ffffff;
+  border: none;
+}
+.wp-btn-primary:hover {
+  background-color: #135e96;
+}
+
+.wp-btn-whatsapp {
+  background-color: #107c41;
+  color: #ffffff;
+  border: none;
+}
+.wp-btn-whatsapp:hover {
+  background-color: #0b582e;
+}
+
+.wp-btn-email {
+  background-color: #1d2327;
+  color: #ffffff;
+  border: none;
+}
+.wp-btn-email:hover {
+  background-color: #2c3338;
+}
 
 @keyframes count-up {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fade-in {
-  from { opacity: 0; transform: translateY(16px); }
+  from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-.animate-fade-in { animation: fade-in 0.5s ease both; }
-.animate-count { animation: count-up 0.4s ease both; }
+.animate-fade-in { animation: fade-in 0.3s ease both; }
+.animate-count { animation: count-up 0.3s ease both; }

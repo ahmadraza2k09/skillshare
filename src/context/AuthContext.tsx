@@ -42,7 +42,7 @@ const DEMO_USERS: Record<UserRole, User> = {
   admin: {
     id: 'u4',
     name: 'Admin User',
-    email: 'admin@khayr.org',
+    email: 'admin@skillshare.org',
     role: 'admin',
     joinedAt: '2023-11-01',
   },

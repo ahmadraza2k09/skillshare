@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useRouter } from '../context/RouterContext';
 import { useAuth } from '../context/AuthContext';
 import Logo from '../components/Logo';
+import SolidIcon from '../components/SolidIcon';
 import type { UserRole } from '../data/types';
 
 export default function LoginPage() {
@@ -16,43 +17,47 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAFAF8] flex">
+    <div className="min-h-screen bg-[#f0f0f1] flex">
       {/* Left panel */}
-      <div className="hidden lg:flex lg:w-1/2 bg-[#0F3D26] flex-col p-12 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10" style={{
-          backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)',
-          backgroundSize: '24px 24px',
-        }} />
+      <div className="hidden lg:flex lg:w-1/2 bg-[#1d2327] flex-col p-12 relative overflow-hidden">
+        <div
+          className="absolute inset-0 opacity-10"
+          style={{
+            backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)',
+            backgroundSize: '24px 24px',
+          }}
+        />
         <div className="relative z-10">
           <button onClick={() => navigate('/')}>
             <Logo size="md" light />
           </button>
         </div>
         <div className="relative z-10 flex-1 flex flex-col justify-center">
-          <h2 className="text-4xl font-display font-semibold text-white leading-snug mb-5" style={{ fontFamily: "'Fraunces', serif" }}>
-            Join a community that turns goodwill into real impact.
+          <span className="text-xs font-bold text-[#2271b1] uppercase tracking-widest block mb-2">Direct Connection Platform</span>
+          <h2 className="text-3xl font-extrabold text-white leading-snug mb-6">
+            Join NGOs, Schools & Volunteers Connecting for Verified Impact.
           </h2>
           <div className="space-y-4">
             {[
-              { icon: '✓', text: 'Connect with genuine community needs' },
-              { icon: '✓', text: 'Build a verified volunteer credibility profile' },
-              { icon: '✓', text: 'Earn badges and recognition for real service' },
-              { icon: '✓', text: 'Measure your impact with verified statistics' },
+              { iconName: 'building' as const, text: 'Post volunteer requirements with clear volunteer rewards' },
+              { iconName: 'email' as const, text: 'Direct communication via Email & WhatsApp' },
+              { iconName: 'award' as const, text: 'Earn verifiable volunteer certificates and recognition' },
+              { iconName: 'chart' as const, text: 'Build a permanent credibility profile and impact metrics' },
             ].map(item => (
-              <div key={item.text} className="flex items-center gap-3 text-white/80">
-                <span className="w-6 h-6 bg-[#E8820C] rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
-                  {item.icon}
-                </span>
-                <span className="text-sm">{item.text}</span>
+              <div key={item.text} className="flex items-center gap-3 text-white/90">
+                <div className="w-7 h-7 bg-[#2271b1] rounded-none flex items-center justify-center text-white flex-shrink-0">
+                  <SolidIcon name={item.iconName} size={14} />
+                </div>
+                <span className="text-xs font-bold">{item.text}</span>
               </div>
             ))}
           </div>
         </div>
-        <div className="relative z-10 bg-white/10 rounded-xl p-5 border border-white/15">
-          <p className="text-sm text-white/70 italic">
-            "Khayr connected my school with a computer trainer within 2 days. 35 students who had never touched a keyboard now know how to use the internet safely."
+        <div className="relative z-10 bg-white/10 p-4 rounded-none">
+          <p className="text-xs text-white/80 italic leading-relaxed">
+            &quot;Skill Share Platform allowed our school to connect directly with a computer trainer within 2 days. 35 students now know how to use computers safely.&quot;
           </p>
-          <p className="text-xs text-white/50 mt-3">— Principal, Government School, Multan (Demo)</p>
+          <p className="text-[11px] text-white/50 mt-2 font-bold">— Principal, Government School, Multan</p>
         </div>
       </div>
 
@@ -66,92 +71,111 @@ export default function LoginPage() {
           </div>
 
           {/* Mode tabs */}
-          <div className="flex bg-[#F0EDE6] rounded-xl p-1 mb-8">
+          <div className="flex bg-white rounded-none p-1 mb-6 shadow-xs">
             {(['login', 'register'] as const).map(m => (
               <button
                 key={m}
                 onClick={() => setMode(m)}
-                className={`flex-1 py-2.5 text-sm font-medium rounded-lg capitalize transition-all ${mode === m ? 'bg-white text-[#141210] shadow-sm' : 'text-[#6B6560] hover:text-[#141210]'}`}
+                className={`flex-1 py-2.5 text-xs font-extrabold rounded-none uppercase tracking-wider transition-all ${
+                  mode === m ? 'bg-[#2271b1] text-white' : 'text-[#50575e] hover:text-[#1d2327]'
+                }`}
               >
-                {m === 'login' ? 'Sign In' : 'Register'}
+                {m === 'login' ? 'Sign In' : 'Register Account'}
               </button>
             ))}
           </div>
 
-          {/* Demo notice */}
-          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6 text-sm text-amber-800">
-            <p className="font-semibold mb-1">Demo Mode</p>
-            <p>Authentication is not yet implemented. Select a role below and click "{mode === 'login' ? 'Sign In' : 'Create Account'}" to explore the platform as that user type.</p>
+          <div className="wp-card p-6 shadow-sm rounded-none">
+            <div className="pb-3 mb-5 border-b border-[#2271b1]">
+              <h3 className="font-extrabold text-[#1d2327] text-base uppercase tracking-wider">
+                {mode === 'login' ? 'Platform Sign In' : 'Register Account'}
+              </h3>
+              <p className="text-xs text-[#50575e] mt-0.5 font-semibold">Select a role profile below to continue</p>
+            </div>
+
+            {mode === 'register' && (
+              <div className="mb-5">
+                <label className="block text-xs font-bold text-[#1d2327] uppercase tracking-wider mb-2">Account Type</label>
+                <div className="grid grid-cols-1 gap-2">
+                  {[
+                    { role: 'community_member' as const, label: 'Community Member', desc: 'Need help or submit requests', iconName: 'user' as const },
+                    { role: 'volunteer' as const, label: 'Volunteer', desc: 'Share skills & earn certificates', iconName: 'users' as const },
+                    { role: 'organization' as const, label: 'Organisation / NGO', desc: 'Post opportunities & manage volunteers', iconName: 'building' as const },
+                  ].map(opt => (
+                    <button
+                      key={opt.role}
+                      type="button"
+                      onClick={() => setSelectedRole(opt.role)}
+                      className={`p-3 rounded-none text-left transition-all flex items-center gap-3 ${
+                        selectedRole === opt.role
+                          ? 'bg-[#2271b1] text-white'
+                          : 'bg-[#f6f7f7] text-[#1d2327] hover:bg-[#e2e4e7]'
+                      }`}
+                    >
+                      <div className={`w-8 h-8 rounded-none flex items-center justify-center flex-shrink-0 ${
+                        selectedRole === opt.role ? 'bg-white text-[#2271b1]' : 'bg-[#2271b1] text-white'
+                      }`}>
+                        <SolidIcon name={opt.iconName} size={16} />
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-xs font-bold uppercase tracking-wider">{opt.label}</p>
+                        <p className={`text-[11px] ${selectedRole === opt.role ? 'text-white/80' : 'text-[#50575e]'}`}>{opt.desc}</p>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {mode === 'login' && (
+              <div className="mb-5">
+                <label className="block text-xs font-bold text-[#1d2327] uppercase tracking-wider mb-2">Select User Account</label>
+                <div className="space-y-2">
+                  {[
+                    { role: 'volunteer' as const, label: 'Ahmad Raza', subtitle: 'Volunteer (Gold Trust)', iconName: 'users' as const },
+                    { role: 'community_member' as const, label: 'Sara Khan', subtitle: 'Community Member', iconName: 'user' as const },
+                    { role: 'organization' as const, label: 'Bright Future Foundation', subtitle: 'Organisation / NGO', iconName: 'building' as const },
+                    { role: 'admin' as const, label: 'Admin User', subtitle: 'Platform Administrator', iconName: 'shield' as const },
+                  ].map(opt => (
+                    <button
+                      key={opt.role}
+                      type="button"
+                      onClick={() => setSelectedRole(opt.role)}
+                      className={`w-full flex items-center gap-3 p-3 rounded-none text-left transition-all ${
+                        selectedRole === opt.role
+                          ? 'bg-[#2271b1] text-white'
+                          : 'bg-[#f6f7f7] text-[#1d2327] hover:bg-[#e2e4e7]'
+                      }`}
+                    >
+                      <div className={`w-7 h-7 rounded-none flex items-center justify-center flex-shrink-0 ${
+                        selectedRole === opt.role ? 'bg-white text-[#2271b1]' : 'bg-[#2271b1] text-white'
+                      }`}>
+                        <SolidIcon name={opt.iconName} size={14} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs font-bold uppercase tracking-wider">{opt.label}</p>
+                        <p className={`text-[11px] ${selectedRole === opt.role ? 'text-white/80' : 'text-[#50575e]'}`}>{opt.subtitle}</p>
+                      </div>
+                      {selectedRole === opt.role && (
+                        <SolidIcon name="check-circle" size={16} className="text-white" />
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <button
+              onClick={handleLogin}
+              className="wp-btn wp-btn-primary w-full text-xs py-3 rounded-none"
+            >
+              <span>{mode === 'login' ? 'Sign In Now' : 'Create Account & Continue'}</span>
+              <SolidIcon name="chevron-right" size={14} />
+            </button>
           </div>
 
-          {mode === 'register' && (
-            <div className="mb-5">
-              <label className="block text-sm font-medium text-[#141210] mb-3">I am a...</label>
-              <div className="grid grid-cols-2 gap-3">
-                {([
-                  { role: 'community_member', label: 'Community Member', desc: 'I need help', icon: '🙋' },
-                  { role: 'volunteer', label: 'Volunteer', desc: 'I want to help', icon: '🤝' },
-                  { role: 'organization', label: 'Organisation', desc: 'School, NGO, etc.', icon: '🏫' },
-                ] as const).map(opt => (
-                  <button
-                    key={opt.role}
-                    onClick={() => setSelectedRole(opt.role)}
-                    className={`p-4 rounded-xl border text-left transition-all ${selectedRole === opt.role ? 'border-[#1B5E3B] bg-[#F0F9F4]' : 'border-[#E5E0D8] bg-white hover:border-[#C8C4BC]'}`}
-                  >
-                    <div className="text-xl mb-1">{opt.icon}</div>
-                    <p className="text-sm font-medium text-[#141210]">{opt.label}</p>
-                    <p className="text-xs text-[#9B9590]">{opt.desc}</p>
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {mode === 'login' && (
-            <div className="mb-5">
-              <label className="block text-sm font-medium text-[#141210] mb-3">Sign in as (demo)</label>
-              <div className="space-y-2">
-                {([
-                  { role: 'volunteer', label: 'Ahmad Raza', subtitle: 'Volunteer — Gold Trust Level', icon: '🤝' },
-                  { role: 'community_member', label: 'Sara Khan', subtitle: 'Community Member', icon: '🙋' },
-                  { role: 'organization', label: 'Bright Future Foundation', subtitle: 'Organisation', icon: '🏫' },
-                  { role: 'admin', label: 'Admin User', subtitle: 'Platform Administrator', icon: '⚙️' },
-                ] as const).map(opt => (
-                  <button
-                    key={opt.role}
-                    onClick={() => setSelectedRole(opt.role)}
-                    className={`w-full flex items-center gap-3 p-3.5 rounded-xl border text-left transition-all ${selectedRole === opt.role ? 'border-[#1B5E3B] bg-[#F0F9F4]' : 'border-[#E5E0D8] bg-white hover:border-[#C8C4BC]'}`}
-                  >
-                    <span className="text-xl">{opt.icon}</span>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-[#141210]">{opt.label}</p>
-                      <p className="text-xs text-[#9B9590]">{opt.subtitle}</p>
-                    </div>
-                    {selectedRole === opt.role && (
-                      <div className="w-5 h-5 bg-[#1B5E3B] rounded-full flex items-center justify-center text-white text-xs">✓</div>
-                    )}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          <button
-            onClick={handleLogin}
-            className="w-full py-3.5 bg-[#1B5E3B] text-white font-semibold rounded-xl hover:bg-[#2D7A52] transition-colors"
-          >
-            {mode === 'login' ? 'Sign In' : 'Create Account'} →
-          </button>
-
-          <p className="text-center text-sm text-[#9B9590] mt-5">
-            {mode === 'login' ? "Don't have an account?" : 'Already have an account?'}{' '}
-            <button onClick={() => setMode(mode === 'login' ? 'register' : 'login')} className="text-[#1B5E3B] font-medium hover:underline">
-              {mode === 'login' ? 'Register' : 'Sign in'}
-            </button>
-          </p>
-
-          <button onClick={() => navigate('/')} className="mt-4 w-full text-center text-xs text-[#9B9590] hover:text-[#6B6560] transition-colors">
-            ← Back to homepage
+          <button onClick={() => navigate('/')} className="mt-4 w-full text-center text-xs text-[#50575e] font-bold uppercase tracking-wider hover:underline">
+            Back to homepage
           </button>
         </div>
       </div>

@@ -9,7 +9,6 @@ import VolunteerPage from './pages/VolunteerPage';
 import VolunteerProfile from './pages/VolunteerProfile';
 import Projects from './pages/Projects';
 import Organizations from './pages/Organizations';
-import ImpactPage from './pages/ImpactPage';
 import About from './pages/About';
 import Dashboard from './pages/Dashboard';
 import RequestHelp from './pages/RequestHelp';
@@ -30,7 +29,6 @@ function AppInner() {
     if (route.startsWith('/volunteer/')) return <VolunteerProfile />;
     if (route === '/projects') return <Projects />;
     if (route === '/organizations') return <Organizations />;
-    if (route === '/impact') return <ImpactPage />;
     if (route === '/about') return <About />;
     if (route === '/dashboard') return <Dashboard />;
     if (route === '/request-help') return <RequestHelp />;
@@ -45,21 +43,18 @@ function AppInner() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#FAFAF8' }}>
+    <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#f0f0f1' }}>
       {!isAdminPage && <Navbar />}
       {isAdminPage && (
-        <div className="bg-[#0F3D26] px-6 py-3 flex items-center gap-4">
+        <div className="bg-[#1d2327] px-6 py-3 flex items-center gap-4 border-b border-[#2c3338]">
           <button
             onClick={() => { window.location.hash = '/'; }}
-            className="flex items-center gap-2 text-white/70 hover:text-white text-sm transition-colors"
+            className="flex items-center gap-2 text-white/80 hover:text-white text-xs font-semibold transition-colors"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            Back to platform
+            ← Back to main site
           </button>
           <span className="text-white/40 text-xs">·</span>
-          <span className="text-white/70 text-sm">Admin Panel</span>
+          <span className="text-white/90 text-xs font-bold">Admin Panel</span>
         </div>
       )}
       <main className="flex-1">{renderPage()}</main>

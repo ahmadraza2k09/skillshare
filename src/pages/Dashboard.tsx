@@ -2,6 +2,7 @@ import { useRouter } from '../context/RouterContext';
 import { useAuth } from '../context/AuthContext';
 import { DEMO_REQUESTS, DEMO_APPLICATIONS, DEMO_NOTIFICATIONS, DEMO_BADGES } from '../data/demo';
 import StatusBadge from '../components/StatusBadge';
+import SolidIcon, { IconName } from '../components/SolidIcon';
 import type { RequestStatus } from '../data/types';
 
 export default function Dashboard() {
@@ -10,13 +11,15 @@ export default function Dashboard() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-[#FAFAF8] flex items-center justify-center px-4">
-        <div className="max-w-sm w-full text-center bg-white rounded-2xl border border-[#E5E0D8] p-10">
-          <div className="w-16 h-16 bg-[#F0F9F4] rounded-full flex items-center justify-center mx-auto mb-5 text-2xl">🔐</div>
-          <h2 className="text-xl font-semibold text-[#141210] mb-2">Sign in to continue</h2>
-          <p className="text-sm text-[#6B6560] mb-6">Sign in to access your dashboard.</p>
-          <button onClick={() => navigate('/login')} className="w-full py-3 bg-[#1B5E3B] text-white rounded-xl font-semibold hover:bg-[#2D7A52] transition-colors">
-            Sign In
+      <div className="min-h-screen bg-[#f0f0f1] flex items-center justify-center px-4">
+        <div className="max-w-sm w-full text-center wp-card p-8 rounded-none">
+          <div className="w-14 h-14 bg-[#2271b1] text-white rounded-none flex items-center justify-center mx-auto mb-4">
+            <SolidIcon name="lock" size={28} />
+          </div>
+          <h2 className="text-lg font-bold text-[#1d2327] mb-1">Sign in to Access Dashboard</h2>
+          <p className="text-xs text-[#50575e] mb-6">Please sign in to manage your volunteer opportunities or interest.</p>
+          <button onClick={() => navigate('/login')} className="wp-btn wp-btn-primary w-full">
+            Sign In Now
           </button>
         </div>
       </div>
@@ -47,30 +50,31 @@ export default function Dashboard() {
       }));
 
   return (
-    <div className="bg-[#FAFAF8] min-h-screen">
-      {/* Header */}
-      <div className="bg-white border-b border-[#E5E0D8] py-6 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+    <div className="bg-[#f0f0f1] min-h-screen pb-16">
+      {/* WP Admin Dashboard Header */}
+      <div className="bg-white py-6 px-4 sm:px-6 lg:px-8 shadow-xs rounded-none">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-display font-semibold text-[#141210]" style={{ fontFamily: "'Fraunces', serif" }}>
-              Welcome back, {user.name.split(' ')[0]}
+            <span className="text-xs font-bold text-[#2271b1] uppercase tracking-wider block">Dashboard Overview</span>
+            <h1 className="text-2xl font-extrabold text-[#1d2327]">
+              Welcome back, {user.name}
             </h1>
-            <p className="text-sm text-[#9B9590] mt-0.5 capitalize">{user.role.replace('_', ' ')} account · Demo mode</p>
+            <p className="text-xs text-[#50575e] mt-0.5 capitalize font-semibold">{user.role.replace('_', ' ')} Account · Active Session</p>
           </div>
           <div className="flex gap-3">
             {user.role === 'community_member' || user.role === 'organization' ? (
               <button
                 onClick={() => navigate('/request-help')}
-                className="px-5 py-2.5 bg-[#1B5E3B] text-white text-sm font-medium rounded-xl hover:bg-[#2D7A52] transition-colors"
+                className="wp-btn wp-btn-primary text-xs"
               >
-                + New Request
+                <SolidIcon name="plus" size={14} /> Post New Opportunity
               </button>
             ) : (
               <button
                 onClick={() => navigate('/find-help')}
-                className="px-5 py-2.5 bg-[#1B5E3B] text-white text-sm font-medium rounded-xl hover:bg-[#2D7A52] transition-colors"
+                className="wp-btn wp-btn-primary text-xs"
               >
-                Find Needs
+                <SolidIcon name="search" size={14} /> Find Opportunities
               </button>
             )}
           </div>
@@ -79,54 +83,56 @@ export default function Dashboard() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main */}
-          <div className="lg:col-span-2 space-y-7">
-            {/* Quick stats */}
+          {/* Main Area */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Quick Stats Grid */}
             {(() => {
               const stats = user.role === 'volunteer'
                 ? [
-                    { val: '11', label: 'Services', icon: '✓' },
-                    { val: '38h', label: 'Hours', icon: '⏱' },
-                    { val: '220', label: 'Helped', icon: '🤝' },
-                    { val: '4.6', label: 'Rating', icon: '⭐' },
+                    { val: '11', label: 'Services', iconName: 'check-circle' as const },
+                    { val: '38h', label: 'Hours', iconName: 'clock' as const },
+                    { val: '220', label: 'Helped', iconName: 'users' as const },
+                    { val: '4.6', label: 'Rating', iconName: 'star' as const },
                   ]
                 : [
-                    { val: '4', label: 'Requests', icon: '📋' },
-                    { val: '2', label: 'Active', icon: '🟢' },
-                    { val: '18', label: 'Applications', icon: '📥' },
-                    { val: '95', label: 'People helped', icon: '🤝' },
+                    { val: '4', label: 'Opportunities', iconName: 'building' as const },
+                    { val: '2', label: 'Active', iconName: 'check-circle' as const },
+                    { val: '18', label: 'Inquiries', iconName: 'email' as const },
+                    { val: '95', label: 'Beneficiaries', iconName: 'users' as const },
                   ];
               return (
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                   {stats.map(stat => (
-                    <div key={stat.label} className="bg-white rounded-xl border border-[#E5E0D8] p-4 text-center">
-                      <div className="text-xl mb-1">{stat.icon}</div>
-                      <div className="text-xl font-semibold text-[#141210]">{stat.val}</div>
-                      <div className="text-xs text-[#9B9590]">{stat.label}</div>
+                    <div key={stat.label} className="wp-card p-4 text-center rounded-none">
+                      <div className="w-8 h-8 bg-[#2271b1] text-white flex items-center justify-center mx-auto mb-2 rounded-none">
+                        <SolidIcon name={stat.iconName} size={16} />
+                      </div>
+                      <div className="text-xl font-extrabold text-[#1d2327]">{stat.val}</div>
+                      <div className="text-[10px] font-bold uppercase text-[#50575e]">{stat.label}</div>
                     </div>
                   ))}
                 </div>
               );
             })()}
 
-            {/* My requests / applications */}
-            <div className="bg-white rounded-xl border border-[#E5E0D8]">
-              <div className="px-6 py-4 border-b border-[#F0EDE6] flex justify-between items-center">
-                <h2 className="font-semibold text-[#141210]">
-                  {user.role === 'volunteer' ? 'My Applications' : 'My Requests'}
+            {/* Opportunities List */}
+            <div className="wp-card rounded-none">
+              <div className="px-6 py-4 flex justify-between items-center bg-[#f6f7f7]">
+                <h2 className="font-bold text-[#1d2327] text-sm uppercase tracking-wider">
+                  {user.role === 'volunteer' ? 'My Applications & Interest' : 'Posted Opportunities'}
                 </h2>
-                <button onClick={() => navigate('/find-help')} className="text-xs text-[#1B5E3B] hover:underline">View all</button>
+                <button onClick={() => navigate('/find-help')} className="text-xs text-[#2271b1] font-bold uppercase hover:underline">View all</button>
               </div>
-              <div className="divide-y divide-[#F0EDE6]">
+              <div className="divide-y divide-[#f0f0f1]">
                 {activityList.map(item => (
                   <div
                     key={item.id}
-                    className="px-6 py-4 flex items-center justify-between gap-4 hover:bg-[#FAFAF8] cursor-pointer transition-colors"
+                    className="px-6 py-4 flex items-center justify-between gap-4 hover:bg-[#f6f7f7] cursor-pointer transition-colors"
                     onClick={() => navigate('/request/' + item.id)}
                   >
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-[#141210] line-clamp-1">{item.title}</p>
-                      <p className="text-xs text-[#9B9590] mt-0.5">{item.location} · {item.date}</p>
+                      <p className="text-xs font-bold text-[#1d2327] truncate">{item.title}</p>
+                      <p className="text-[11px] text-[#50575e] mt-0.5">{item.location} · {item.date}</p>
                     </div>
                     <StatusBadge status={item.status} />
                   </div>
@@ -135,23 +141,25 @@ export default function Dashboard() {
             </div>
 
             {/* Notifications */}
-            <div className="bg-white rounded-xl border border-[#E5E0D8]">
-              <div className="px-6 py-4 border-b border-[#F0EDE6] flex justify-between items-center">
-                <h2 className="font-semibold text-[#141210] flex items-center gap-2">
-                  Notifications
+            <div className="wp-card rounded-none">
+              <div className="px-6 py-4 flex justify-between items-center bg-[#f6f7f7]">
+                <h2 className="font-bold text-[#1d2327] text-sm uppercase tracking-wider flex items-center gap-2">
+                  System Notifications
                   {unreadNotifs.length > 0 && (
-                    <span className="text-xs bg-[#E8820C] text-white px-2 py-0.5 rounded-full">{unreadNotifs.length}</span>
+                    <span className="text-[10px] bg-[#2271b1] text-white px-2 py-0.5 rounded-none font-bold">{unreadNotifs.length} new</span>
                   )}
                 </h2>
               </div>
-              <div className="divide-y divide-[#F0EDE6]">
+              <div className="divide-y divide-[#f0f0f1]">
                 {DEMO_NOTIFICATIONS.map(n => (
-                  <div key={n.id} className={`px-6 py-4 flex gap-4 ${!n.read ? 'bg-[#FFFBF5]' : ''}`}>
-                    <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${!n.read ? 'bg-[#E8820C]' : 'bg-[#E5E0D8]'}`} />
+                  <div key={n.id} className={`px-6 py-4 flex gap-3 ${!n.read ? 'bg-[#f0f6fc]' : ''}`}>
+                    <div className="w-6 h-6 bg-[#2271b1] text-white flex items-center justify-center flex-shrink-0 mt-0.5 rounded-none">
+                      <SolidIcon name="bell" size={12} />
+                    </div>
                     <div>
-                      <p className="text-sm font-medium text-[#141210]">{n.title}</p>
-                      <p className="text-sm text-[#6B6560] mt-0.5">{n.body}</p>
-                      <p className="text-xs text-[#9B9590] mt-1">{n.createdAt.split('T')[0]}</p>
+                      <p className="text-xs font-bold text-[#1d2327]">{n.title}</p>
+                      <p className="text-xs text-[#50575e] mt-0.5">{n.body}</p>
+                      <p className="text-[10px] text-[#8c8f94] mt-1 font-bold">{n.createdAt.split('T')[0]}</p>
                     </div>
                   </div>
                 ))}
@@ -160,42 +168,42 @@ export default function Dashboard() {
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-5">
-            {/* Profile card */}
-            <div className="bg-white rounded-xl border border-[#E5E0D8] p-5 text-center">
+          <div className="space-y-6">
+            {/* User Profile Card */}
+            <div className="wp-card p-5 text-center rounded-none">
               {user.avatar ? (
-                <img src={user.avatar} alt={user.name} className="w-16 h-16 rounded-full object-cover mx-auto border-2 border-[#E5E0D8]" />
+                <img src={user.avatar} alt={user.name} className="w-16 h-16 rounded-none object-cover mx-auto" />
               ) : (
-                <div className="w-16 h-16 rounded-full bg-[#1B5E3B] text-white text-xl font-bold flex items-center justify-center mx-auto">
+                <div className="w-16 h-16 rounded-none bg-[#2271b1] text-white text-xl font-bold flex items-center justify-center mx-auto">
                   {user.name[0]}
                 </div>
               )}
-              <h3 className="mt-3 font-semibold text-[#141210]">{user.name}</h3>
-              <p className="text-xs text-[#9B9590] mt-0.5 capitalize">{user.role.replace('_', ' ')}</p>
+              <h3 className="mt-3 font-extrabold text-[#1d2327] text-sm">{user.name}</h3>
+              <p className="text-xs text-[#50575e] mt-0.5 capitalize font-semibold">{user.role.replace('_', ' ')} Account</p>
               <button
                 onClick={() => navigate('/volunteer/v1')}
-                className="mt-4 w-full py-2 border border-[#E5E0D8] rounded-lg text-sm text-[#6B6560] hover:bg-[#FAFAF8] transition-colors"
+                className="mt-4 w-full py-2.5 bg-[#f6f7f7] text-xs text-[#1d2327] font-bold uppercase tracking-wider hover:bg-[#e2e4e7] transition-colors rounded-none"
               >
                 View Public Profile
               </button>
             </div>
 
-            {/* Badges */}
+            {/* Badges Card */}
             {earnedBadges.length > 0 && (
-              <div className="bg-white rounded-xl border border-[#E5E0D8] p-5">
-                <h3 className="font-semibold text-[#141210] mb-3 text-sm">Recent Badges</h3>
-                <div className="space-y-2.5">
+              <div className="wp-card p-5 rounded-none">
+                <h3 className="font-bold text-[#1d2327] uppercase tracking-wider mb-3 text-xs">Recent Badges</h3>
+                <div className="space-y-2">
                   {earnedBadges.map(badge => (
-                    <div key={badge.id} className="flex items-center gap-3 p-2.5 rounded-lg bg-[#FAFAF8]">
+                    <div key={badge.id} className="flex items-center gap-3 p-2.5 bg-[#f6f7f7] rounded-none">
                       <div
-                        className="w-8 h-8 rounded-lg flex items-center justify-center text-base flex-shrink-0"
-                        style={{ background: badge.color + '20' }}
+                        className="w-7 h-7 flex items-center justify-center text-white flex-shrink-0 rounded-none"
+                        style={{ backgroundColor: badge.color }}
                       >
-                        {badge.icon}
+                        <SolidIcon name={(badge.icon as IconName) || 'award'} size={14} />
                       </div>
                       <div className="min-w-0">
-                        <p className="text-xs font-semibold text-[#141210]">{badge.name}</p>
-                        <p className="text-xs text-[#9B9590] line-clamp-1">{badge.description}</p>
+                        <p className="text-xs font-bold text-[#1d2327]">{badge.name}</p>
+                        <p className="text-[11px] text-[#50575e] truncate">{badge.description}</p>
                       </div>
                     </div>
                   ))}
@@ -203,15 +211,19 @@ export default function Dashboard() {
               </div>
             )}
 
-            {/* Switch demo user */}
-            <div className="bg-[#F0EDE6] rounded-xl p-4 border border-[#E5E0D8]">
-              <p className="text-xs font-semibold text-[#141210] mb-3">Demo: Switch User Role</p>
-              <div className="flex flex-col gap-2">
+            {/* Role Switcher */}
+            <div className="wp-card p-4 bg-[#f6f7f7] rounded-none">
+              <p className="text-xs font-bold uppercase tracking-wider text-[#1d2327] mb-2">Switch User Role (Demo)</p>
+              <div className="flex flex-col gap-1.5">
                 {demoRoles.map(role => (
                   <button
                     key={role}
                     onClick={() => login(role)}
-                    className={`py-2 text-xs rounded-lg font-medium capitalize transition-colors ${user.role === role ? 'bg-[#1B5E3B] text-white' : 'bg-white border border-[#E5E0D8] text-[#6B6560] hover:bg-[#FAFAF8]'}`}
+                    className={`py-2 text-xs font-bold uppercase tracking-wider rounded-none capitalize transition-colors ${
+                      user.role === role
+                        ? 'bg-[#2271b1] text-white'
+                        : 'bg-white text-[#1d2327] hover:bg-[#e2e4e7]'
+                    }`}
                   >
                     {role.replace('_', ' ')}
                   </button>

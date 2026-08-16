@@ -55,7 +55,7 @@ export default function Logo({ size = 'md', variant = 'full', light = false }: L
         className={`${s.text} font-display font-semibold tracking-tight leading-none ${light ? 'text-white' : 'text-[#141210]'}`}
         style={{ fontFamily: "'Fraunces', serif" }}
       >
-        Khayr
+        Skill Share Platform
       </span>
     </div>
   );

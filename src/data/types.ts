@@ -8,6 +8,14 @@ export type Urgency = 'low' | 'normal' | 'high' | 'urgent';
 export type TrustLevel = 'new' | 'bronze' | 'silver' | 'gold' | 'champion';
 export type UserRole = 'community_member' | 'volunteer' | 'organization' | 'admin';
 
+export type VolunteerRecognition =
+  | 'Certificate of Appreciation'
+  | 'Appreciation Letter'
+  | 'Volunteer Certificate'
+  | 'Recognition/Award'
+  | 'Recommendation Letter'
+  | 'Other';
+
 export interface ServiceRequest {
   id: string;
   title: string;
@@ -29,6 +37,11 @@ export interface ServiceRequest {
   requesterId: string;
   requesterName: string;
   requesterType: 'individual' | 'organization';
+  orgEmail: string;
+  orgWhatsapp: string;
+  orgPhone?: string;
+  recognitionType: VolunteerRecognition;
+  recognitionDetails?: string;
   createdAt: string;
   image?: string;
 }
@@ -48,6 +61,8 @@ export interface Volunteer {
   points: number;
   badges: string[];
   avatar?: string;
+  email?: string;
+  whatsapp?: string;
   joinedAt: string;
   languages: string[];
   availability: string;
@@ -61,6 +76,9 @@ export interface Organization {
   location: string;
   description: string;
   verified: boolean;
+  email: string;
+  whatsapp: string;
+  phone?: string;
   activeRequests: number;
   completedProjects: number;
   totalVolunteers: number;
@@ -112,6 +130,9 @@ export interface Application {
   requestTitle: string;
   volunteerId: string;
   volunteerName: string;
+  volunteerEmail: string;
+  volunteerWhatsapp: string;
+  volunteerSkills?: string[];
   message: string;
   status: 'pending' | 'shortlisted' | 'accepted' | 'rejected';
   appliedAt: string;
