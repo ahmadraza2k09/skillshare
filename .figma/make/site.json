@@ -1,0 +1,10 @@
+{
+  "description": "This web application offers a user-friendly platform for creating and managing websites, featuring customizable logos and favicons for branding.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
